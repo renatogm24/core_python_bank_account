@@ -10,7 +10,7 @@ class CuentaBancaria:
       return self
         
     def retiro(self, amount):
-      if (self.balance - amount >= 0):
+      if (CuentaBancaria.puede_retirar(self.balance,amount)):
         self.balance -= amount
       else:
         print("Fondos insuficientes: cobrando una tarifa de $5")
@@ -22,7 +22,7 @@ class CuentaBancaria:
       return self
         
     def generar_interes(self):
-      if self.balance > 0:
+      if (CuentaBancaria.puede_generar_interes(self.balance)):
         self.balance *= (1+self.tasa_interes)
       return self
 
@@ -30,6 +30,20 @@ class CuentaBancaria:
     def imprimir_todas_cuentas(cls):
       for cuenta in cls.todas_cuentas:
         cuenta.mostrar_info_cuenta()
+    
+    @staticmethod
+    def puede_retirar(balance,amount):
+      if(balance - amount >= 0):
+        return True
+      else:
+        return False
+
+    @staticmethod
+    def puede_generar_interes(balance):
+      if(balance > 0):
+        return True
+      else:
+        return False
 
 cuenta1 = CuentaBancaria(0.10)
 cuenta2 = CuentaBancaria(0.11, 35000)
